@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Fira Code -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="/dist/output.css" rel="stylesheet" />
+</head>
+
+<body>
+  <div
+    class="flex flex-col max-w-sm gap-4 m-10 mx-auto text-center h-[80vh] bg-white shadow-md rounded-lg overflow-hidden">
+
+
+    <div class="px-4 py-4 bg-sky-400">
+      <h1 class="text-4xl font-bold text-sky-900">Todo App</h1>
+    </div>
+    <div class="px-4 py-4">
+      <form action="" class="flex">
+        <input type="text" placeholder="Add your task here"
+          class="px-4 py-2 rounded-sm bg-[#00abfb3b] placeholder:text-black w-[90%]" />
+
+        <button type="submit" class="bg-slate-800 flex justify-center items-center w-[50px]">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plus" width="30" height="30"
+            viewBox="0 0 24 24" stroke-width="1.5" stroke="#00abfb" fill="none" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M12 5l0 14" />
+            <path d="M5 12l14 0" />
+          </svg></button>
+      </form>
+    </div>
+
+    <div class="px-4">
+      <ul id="list_container" class="text-left flex flex-col gap-[8px]">
+        <li class="flex item-center">
+          <input type="checkbox" class="mx-2" />
+          <p>Do Homework
+            <span class="text-[14px] bg-sky-200 p-1 rounded-md">
+              2 minutes ago
+            </span>
+          </p>
+
+        </li>
+        <li class="flex item-center">
+          <input type="checkbox" class="mx-2" />
+          <p> Do Computer Games
+            <span class="text-[14px] bg-sky-200 p-1 rounded-md">
+              1 hour ago
+            </span>
+          </p>
+
+        </li>
+        <li class="flex item-center">
+          <input type="checkbox" class="mx-2" />
+          <p>Do Computer Games
+            <span class="text-[14px]  bg-sky-200 p-1 rounded-md">
+              1 day ago
+            </span>
+          </p>
+
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+
+</html>
+
+

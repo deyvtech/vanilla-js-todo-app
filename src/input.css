@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    body {
+        @apply font-Fira-Code bg-neutral-200
+    }
+}
+
+@layer components {
+    .btn-green {
+        @apply px-8 py-4 bg-green-800 text-green-300
+    }
+}
