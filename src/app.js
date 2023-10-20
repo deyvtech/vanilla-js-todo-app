@@ -56,15 +56,21 @@ function timeElapseCount(pastTime, UTM) {
 }
 
 // HTML view
-function setHTMLItem(item, date) {
+function setHTMLItem(item, date, isCompleted) {
   const html = `
-      <li class="flex items-center">
+      <li class="flex items-center py-4 pl-2 rounded-md bg-sky-300" data-id="${date}">
+      <img src="${
+        isCompleted ? "/img/check-green.png" : "/img/check.png"
+      }" alt="" class="w-[20px] mr-2 cursor-pointer checkmark"/>
         <p>${item}</p>
-        <span class="text-sm bg-sky-200 p-1 rounded-md ml-[15px]">
+        <span class="text-xs bg-sky-200 p-1 rounded-md ml-[15px]">
        ${timeElapseCount(date, unitOfTime)}
         </span>
+  
+        <img src="/img/edit.png" alt="" class="w-[20px] ml-2 cursor-pointer"/>
+        <img src="/img/delete.png" alt="" class="w-[20px] ml-2 cursor-pointer"/>
         <div class="w-2 h-2 rounded-full ${
-          item.isCompleted ? "bg-green-500-500" : "bg-red-500"
+          isCompleted ? "bg-green-500" : "bg-red-500"
         } ml-4">
         </div>
         </li>
@@ -76,7 +82,7 @@ function setHTMLItem(item, date) {
 function displayAllTodo() {
   val
     .map((item) => {
-      setHTMLItem(item.task, item.id);
+      setHTMLItem(item.task, item.id, item.isCompleted);
     })
     .join("");
 }
@@ -104,5 +110,13 @@ function addTodo() {
   });
 }
 addTodo();
+
+function isCompleted(e) {
+  console.log(e.target)
+}
+
+document.querySelectorAll(".checkmark").forEach(checkBtn => {
+  checkBtn.addEventListener('click', isCompleted)
+})
 
 
