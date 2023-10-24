@@ -14,7 +14,6 @@ const unitOfTime = {
   second: 1,
 };
 
-
 function timeElapseCount(pastTime, UTM) {
   const curDate = new Date(Date.now());
   const interval = Math.floor((new Date(curDate) - new Date(pastTime)) / 1000);
@@ -43,12 +42,10 @@ function timeElapseCount(pastTime, UTM) {
   if (interval <= UTM.month) {
     return displayAgo(UTM.day, 'day')
   }
-
   // month
   if (interval <= UTM.year) {
     return displayAgo(UTM.month, 'month')
   }
-
   // year
   if (interval >= UTM.year) {
     return displayAgo(UTM.year, 'year')
@@ -56,33 +53,32 @@ function timeElapseCount(pastTime, UTM) {
 }
 
 // HTML view
-function setHTMLItem(item, date, isCompleted) {
-  const html = `
-      <li class="flex items-center py-4 pl-2 rounded-md bg-sky-300" data-id="${date}">
+function setHTMLItem(task, id, isCompleted) {
+  return `
+      <li class="flex items-center py-4 pl-2 rounded-md bg-sky-300" data-id="${id}">
       <img src="${
         isCompleted ? "/img/check-green.png" : "/img/check.png"
-      }" alt="" class="w-[20px] mr-2 cursor-pointer checkmark"/>
-        <p>${item}</p>
-        <span class="text-xs bg-sky-200 p-1 rounded-md ml-[15px]">
-       ${timeElapseCount(date, unitOfTime)}
+      }" alt="" class="w-[20px] mr-2 cursor-pointer" id="checkmark"/>
+        <p class="${isCompleted ? 'line-through' : ''}">${task}</p>
+        <span class="text-xs bg-sky-200 px-1 rounded-md ml-[15px]">
+       ${timeElapseCount(id, unitOfTime)}
         </span>
   
-        <img src="/img/edit.png" alt="" class="w-[20px] ml-2 cursor-pointer"/>
-        <img src="/img/delete.png" alt="" class="w-[20px] ml-2 cursor-pointer"/>
+        <img src="/img/edit.png" alt="" class="w-[20px] ml-2 cursor-pointer" id="edit"/>
+        <img src="/img/delete.png" alt="" class="w-[20px] ml-2 cursor-pointer" id="delete"/>
         <div class="w-2 h-2 rounded-full ${
           isCompleted ? "bg-green-500" : "bg-red-500"
         } ml-4">
         </div>
         </li>
       `;
-  todoEl.insertAdjacentHTML("afterbegin", html);
 }
 
 // display onLoad all todo
 function displayAllTodo() {
   val
     .map((item) => {
-      setHTMLItem(item.task, item.id, item.isCompleted);
+      todoEl.insertAdjacentHTML("afterbegin", setHTMLItem(item.task, item.id, item.isCompleted));
     })
     .join("");
 }
@@ -102,8 +98,9 @@ function addTodo() {
         id: Date.now(),
       });
 
+
       localStorage.setItem("todo", JSON.stringify(val));
-      setHTMLItem(input.value, Date.now());
+      todoEl.insertAdjacentHTML("afterbegin", setHTMLItem(val.at(-1).task, val.at(-1).id, null));
     }
 
     input.value = "";
@@ -112,11 +109,76 @@ function addTodo() {
 addTodo();
 
 function isCompleted(e) {
-  console.log(e.target)
+  const btnCheck = e.target.closest('#checkmark');
+  const btnDelete = e.target.closest('#delete')
+
+  // mark as complete
+  if (btnCheck) {
+    const parentEl = btnCheck.parentElement
+    const parentElId = parentEl.dataset.id
+    
+    const findTodo = val.find(todo => {
+      return todo.id === +parentElId
+    })
+  
+    if (btnCheck) {
+      findTodo.isCompleted = !findTodo.isCompleted
+      localStorage.setItem('todo', JSON.stringify(val))
+    
+      if (findTodo.isCompleted) {
+        btnCheck.src = '/img/check-green.png'
+        parentEl.lastElementChild.classList.replace('bg-red-500', 'bg-green-500')
+        btnCheck.nextElementSibling.classList.add('line-through')
+        
+      } else {
+        btnCheck.src = '/img/check.png'
+        parentEl.lastElementChild.classList.replace('bg-green-500', 'bg-red-500')
+        btnCheck.nextElementSibling.classList.remove('line-through')
+      
+      }
+    }
+  }
+
+  // delete todo
+  if (btnDelete) {
+    const parentEl = btnDelete.parentElement
+    const parentElId = parentEl.dataset.id
+ 
+
+    const curVal = JSON.parse(localStorage.getItem("todo"))
+    const newVal = curVal.filter(item => item.id !== +parentElId)
+   
+
+    localStorage.setItem('todo', JSON.stringify(newVal))
+
+
+    const arEl = newVal.reverse().map(item => {
+
+      const html = `
+      <li class="flex items-center py-4 pl-2 rounded-md bg-sky-300" data-id="${item.id}">
+      <img src="${
+        item.isCompleted ? "/img/check-green.png" : "/img/check.png"
+      }" alt="" class="w-[20px] mr-2 cursor-pointer" id="checkmark"/>
+        <p class="${item.isCompleted ? 'line-through' : ''}">${item.task}</p>
+        <span class="text-xs bg-sky-200 px-1 rounded-md ml-[15px]">
+       ${timeElapseCount(item.id, unitOfTime)}
+        </span>
+  
+        <img src="/img/edit.png" alt="" class="w-[20px] ml-2 cursor-pointer" id="edit"/>
+        <img src="/img/delete.png" alt="" class="w-[20px] ml-2 cursor-pointer" id="delete"/>
+        <div class="w-2 h-2 rounded-full ${
+          item.isCompleted ? "bg-green-500" : "bg-red-500"
+        } ml-4">
+        </div>
+        </li>  
+      `;
+
+      return html
+    }).join('')
+    todoEl.innerHTML = arEl
+
+  }
+
+
 }
-
-document.querySelectorAll(".checkmark").forEach(checkBtn => {
-  checkBtn.addEventListener('click', isCompleted)
-})
-
-
+todoEl.addEventListener('click', isCompleted)

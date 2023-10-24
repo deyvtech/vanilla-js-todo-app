@@ -26,7 +26,7 @@
     <div class="px-4 py-4">
       <form action="" class="flex">
         <input type="text" placeholder="Add your task here"
-          class="px-4 py-2 rounded-sm bg-slate-200 placeholder:text-black w-[90%]" />
+          class="px-4 py-2 rounded-sm bg-slate-200 placeholder:text-black w-[90%] focus-visible:outline-none" />
 
         <button type="submit" class="bg-slate-800 flex justify-center items-center w-[50px]">
           <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plus" width="30" height="30"
@@ -39,11 +39,14 @@
       </form>
     </div>
 
-    <div class="px-4">
+    <div class="px-4 overflow-y-scroll h-full pb-5" id="lists">
       <ul id="list_container" class="text-left flex flex-col gap-[8px]">
       </ul>
     </div>
   </div>
+
+
+  <p id="text">asdasd</p>
 
   <script src="./app.js"></script>
 </body>
