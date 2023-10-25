@@ -1,7 +1,7 @@
 "use strict";
 
 const todoEl = document.querySelector("#list_container");
-const val = localStorage.getItem("todo")
+let val = localStorage.getItem("todo")
   ? JSON.parse(localStorage.getItem("todo"))
   : [];
 
@@ -108,7 +108,7 @@ function addTodo() {
 }
 addTodo();
 
-function isCompleted(e) {
+function todoClick(e) {
   const btnCheck = e.target.closest('#checkmark');
   const btnDelete = e.target.closest('#delete')
 
@@ -150,6 +150,7 @@ function isCompleted(e) {
    
 
     localStorage.setItem('todo', JSON.stringify(newVal))
+    val = newVal
 
 
     const arEl = newVal.reverse().map(item => {
@@ -181,4 +182,4 @@ function isCompleted(e) {
 
 
 }
-todoEl.addEventListener('click', isCompleted)
+todoEl.addEventListener('click', todoClick)
