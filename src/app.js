@@ -60,13 +60,14 @@ function setHTMLItem(task, id, isCompleted) {
       <img src="${
         isCompleted ? "./img/check-green.png" : "./img/check.png"
       }" alt="" class="w-[20px] mr-2 cursor-pointer" id="checkmark"/>
-        <p class="${isCompleted ? 'line-through' : ''}">${task}</p>
-        <span class="text-xs bg-sky-200 px-1 rounded-md ml-[15px]">
+        <p class="${isCompleted ? 'line-through' : ''}" id="content">${task}</p>
+        <span class="text-xs bg-sky-200 px-2 rounded-md ml-[15px]">
        ${timeElapseCount(id, unitOfTime)}
         </span>
   
         <img src="./img/edit.png" alt="" class="w-[20px] ml-2 cursor-pointer" id="edit"/>
         <img src="./img/delete.png" alt="" class="w-[20px] ml-2 cursor-pointer" id="delete"/>
+        <button type="button" class="ml-4 px-4 py-1 rounded-md text-sky-400  bg-black" id="update">Update</button>
         <div class="w-2 h-2 rounded-full ${
           isCompleted ? "bg-green-500" : "bg-red-500"
         } ml-4">
@@ -112,6 +113,8 @@ addTodo();
 function todoClick(e) {
   const btnCheck = e.target.closest('#checkmark');
   const btnDelete = e.target.closest('#delete')
+  const btnEdit = e.target.closest('#edit')
+  const btnUpdate = e.target.closest('#update')
 
   // mark as complete
   if (btnCheck) {
@@ -122,22 +125,22 @@ function todoClick(e) {
       return todo.id === +parentElId
     })
   
-    if (btnCheck) {
+
       findTodo.isCompleted = !findTodo.isCompleted
       localStorage.setItem('todo', JSON.stringify(val))
     
       if (findTodo.isCompleted) {
-        btnCheck.src = '/img/check-green.png'
+        btnCheck.src = './img/check-green.png'
         parentEl.lastElementChild.classList.replace('bg-red-500', 'bg-green-500')
         btnCheck.nextElementSibling.classList.add('line-through')
         
       } else {
-        btnCheck.src = '/img/check.png'
+        btnCheck.src = './img/check.png'
         parentEl.lastElementChild.classList.replace('bg-green-500', 'bg-red-500')
         btnCheck.nextElementSibling.classList.remove('line-through')
       
       }
-    }
+    
   }
 
   // delete todo
@@ -161,13 +164,14 @@ function todoClick(e) {
       <img src="${
         item.isCompleted ? "./img/check-green.png" : "./img/check.png"
       }" alt="" class="w-[20px] mr-2 cursor-pointer" id="checkmark"/>
-        <p class="${item.isCompleted ? 'line-through' : ''}">${item.task}</p>
+        <p class="${item.isCompleted ? 'line-through' : ''}" id="content">${item.task}</p>
         <span class="text-xs bg-sky-200 px-1 rounded-md ml-[15px]">
        ${timeElapseCount(item.id, unitOfTime)}
         </span>
   
         <img src="./img/edit.png" alt="" class="w-[20px] ml-2 cursor-pointer" id="edit"/>
         <img src="./img/delete.png" alt="" class="w-[20px] ml-2 cursor-pointer" id="delete"/>
+        <button type="button" class="ml-4 px-4 py-1 rounded-md text-sky-400 bg-black" id="update">Update</button>
         <div class="w-2 h-2 rounded-full ${
           item.isCompleted ? "bg-green-500" : "bg-red-500"
         } ml-4">
@@ -180,6 +184,34 @@ function todoClick(e) {
     todoEl.innerHTML = arEl
 
   }
+
+  // edit todo
+  if (btnEdit) {
+    const parentEl = btnEdit.parentElement
+    const contentEl = parentEl.children.content
+    
+
+    contentEl.setAttribute('contentEditable', true)
+    contentEl.focus()
+  }
+
+  if (btnUpdate) {
+    const parentEl = btnUpdate.parentElement
+    const parentElId = parentEl.dataset.id
+    const contentEl = parentEl.children.content
+
+    const findTodo = val.find(todo => {
+      return todo.id === +parentElId
+    })
+
+
+      findTodo.task = contentEl.textContent
+    localStorage.setItem('todo', JSON.stringify(val))
+    
+      contentEl.setAttribute('contentEditable', false)
+    
+  }
+
 
 
 }
