@@ -58,15 +58,15 @@ function setHTMLItem(task, id, isCompleted) {
   return `
       <li class="flex items-center py-4 pl-2 rounded-md bg-sky-300" data-id="${id}">
       <img src="${
-        isCompleted ? "/img/check-green.png" : "/img/check.png"
+        isCompleted ? "./img/check-green.png" : "./img/check.png"
       }" alt="" class="w-[20px] mr-2 cursor-pointer" id="checkmark"/>
         <p class="${isCompleted ? 'line-through' : ''}">${task}</p>
         <span class="text-xs bg-sky-200 px-1 rounded-md ml-[15px]">
        ${timeElapseCount(id, unitOfTime)}
         </span>
   
-        <img src="/img/edit.png" alt="" class="w-[20px] ml-2 cursor-pointer" id="edit"/>
-        <img src="/img/delete.png" alt="" class="w-[20px] ml-2 cursor-pointer" id="delete"/>
+        <img src="./img/edit.png" alt="" class="w-[20px] ml-2 cursor-pointer" id="edit"/>
+        <img src="./img/delete.png" alt="" class="w-[20px] ml-2 cursor-pointer" id="delete"/>
         <div class="w-2 h-2 rounded-full ${
           isCompleted ? "bg-green-500" : "bg-red-500"
         } ml-4">
@@ -159,15 +159,15 @@ function todoClick(e) {
       const html = `
       <li class="flex items-center py-4 pl-2 rounded-md bg-sky-300" data-id="${item.id}">
       <img src="${
-        item.isCompleted ? "/img/check-green.png" : "/img/check.png"
+        item.isCompleted ? "./img/check-green.png" : "./img/check.png"
       }" alt="" class="w-[20px] mr-2 cursor-pointer" id="checkmark"/>
         <p class="${item.isCompleted ? 'line-through' : ''}">${item.task}</p>
         <span class="text-xs bg-sky-200 px-1 rounded-md ml-[15px]">
        ${timeElapseCount(item.id, unitOfTime)}
         </span>
   
-        <img src="/img/edit.png" alt="" class="w-[20px] ml-2 cursor-pointer" id="edit"/>
-        <img src="/img/delete.png" alt="" class="w-[20px] ml-2 cursor-pointer" id="delete"/>
+        <img src="./img/edit.png" alt="" class="w-[20px] ml-2 cursor-pointer" id="edit"/>
+        <img src="./img/delete.png" alt="" class="w-[20px] ml-2 cursor-pointer" id="delete"/>
         <div class="w-2 h-2 rounded-full ${
           item.isCompleted ? "bg-green-500" : "bg-red-500"
         } ml-4">
