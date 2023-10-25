@@ -160,7 +160,7 @@ function todoClick(e) {
     const arEl = newVal.reverse().map(item => {
 
       const html = `
-      <li class="flex items-center py-4 pl-2 rounded-md bg-sky-300" data-id="${item.id}">
+      <li class="flex items-center py-4 px-2 rounded-md bg-sky-300" data-id="${item.id}">
       <img src="${
         item.isCompleted ? "./img/check-green.png" : "./img/check.png"
       }" alt="" class="w-[20px] mr-2 cursor-pointer" id="checkmark"/>
