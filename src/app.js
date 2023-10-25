@@ -1,5 +1,6 @@
 "use strict";
 
+
 const todoEl = document.querySelector("#list_container");
 let val = localStorage.getItem("todo")
   ? JSON.parse(localStorage.getItem("todo"))
